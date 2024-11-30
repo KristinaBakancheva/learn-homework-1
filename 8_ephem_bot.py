@@ -16,9 +16,9 @@ import logging
 
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 
-logging.basicConfig(format='%(name)s - %(levelname)s - %(message)s',
+logging.basicConfig(format="%(name)s - %(levelname)s - %(message)s",
                     level=logging.INFO,
-                    filename='bot.log')
+                    filename="bot.log")
 
 import ephem
 from datetime import date
@@ -26,10 +26,10 @@ from datetime import date
 TODAY = date.today().strftime("%Y/%m/%d")
 
 PROXY = {
-    'proxy_url': 'socks5://t1.learn.python.ru:1080',
-    'urllib3_proxy_kwargs': {
-        'username': 'learn',
-        'password': 'python'
+    "proxy_url": "socks5://t1.learn.python.ru:1080",
+    "urllib3_proxy_kwargs": {
+        "username": "learn",
+        "password": "python"
     }
 }
 
@@ -45,7 +45,7 @@ planets = {
 }
 
 def greet_user(update, context):
-    text = 'Вызван /start'
+    text = "Вызван /start"
     update.message.reply_text(text)
 
 
@@ -55,13 +55,14 @@ def talk_to_me(update, context):
 
 
 def find_constellation(update, context):
-    user_text = update.message.text.split(' ')
+    user_text = update.message.text.split(" ")
     if len(user_text)==1 or planets.get(user_text[1].lower()) is None:
-        update.message.reply_text('Планета не найдена. Вы должны написать название планеты на английском.Д')
+        update.message.reply_text("Планета не найдена. Вы должны написать название планеты на английском. ")
     else:
         planet = planets.get(user_text[1].lower())(TODAY)
         constellation = ephem.constellation(planet)
-        update.message.reply_text('Сегодня планет {} в созвездии {}.' .format(user_text[1].capitalize(), constellation[1]))
+        planet = user_text[1].capitalize()
+        update.message.reply_text(f"Сегодня планет {planet} в созвездии {constellation[1]}.")
 
 
 
